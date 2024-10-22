@@ -1,0 +1,6 @@
+../Core/Src/stopWatch.c:15:6:segUpCount	8	static
+../Core/Src/stopWatch.c:25:6:segReset	8	static
+../Core/Src/stopWatch.c:30:6:timerReset	4	static
+../Core/Src/stopWatch.c:37:6:saveTime	4	static
+../Core/Src/stopWatch.c:56:6:sw2StopWatchControll	8	static
+../Core/Src/stopWatch.c:69:6:sw3StopWatchReset	8	static
