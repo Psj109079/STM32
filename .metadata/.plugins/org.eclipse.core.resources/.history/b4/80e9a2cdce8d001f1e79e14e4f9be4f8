@@ -1,0 +1,18 @@
+/*
+ * stopWatch.h
+ *
+ *  Created on: Oct 19, 2024
+ *      Author: ckck
+ */
+
+#ifndef INC_STOPWATCH_H_
+#define INC_STOPWATCH_H_
+
+#include "main.h"
+
+void segUpCount();
+void sw2StopWatchControll();
+void sw3StopWatchReset();
+
+
+#endif /* INC_STOPWATCH_H_ */

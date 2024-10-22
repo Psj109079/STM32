@@ -1,0 +1,14 @@
+/*
+ * uartLEDControll.h
+ *
+ *  Created on: Oct 20, 2024
+ *      Author: ckck
+ */
+
+#ifndef INC_UARTLEDCONTROLL_H_
+#define INC_UARTLEDCONTROLL_H_
+
+#include "main.h"
+void uartLedControll();
+
+#endif /* INC_UARTLEDCONTROLL_H_ */

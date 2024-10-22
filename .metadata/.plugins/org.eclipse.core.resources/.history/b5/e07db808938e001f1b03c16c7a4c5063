@@ -1,0 +1,28 @@
+/*
+ * defines.h
+ *
+ *  Created on: Oct 20, 2024
+ *      Author: ckck
+ */
+
+#ifndef INC_DEFINES_H_
+#define INC_DEFINES_H_
+
+typedef enum _stopWatchActionState {
+	RUN = 0,
+	PAUSED,
+	STOP
+} stopWatchActionState;
+
+typedef struct _stopWatchTime {
+	int millisecond;
+	int hour;
+	int minute;
+	int second;
+} stopWatchTime;
+
+typedef struct _stopWatch {
+	stopWatchState state;
+	stopWatchTime time;
+};
+#endif /* INC_DEFINES_H_ */
