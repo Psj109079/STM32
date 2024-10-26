@@ -1,0 +1,60 @@
+/*
+ * stopWatch.h
+ *
+ *  Created on: Oct 19, 2024
+ *      Author: ckck
+ */
+
+#ifndef INC_STOPWATCH_H_
+#define INC_STOPWATCH_H_
+
+#include <stdio.h>
+#include "main.h"
+#include "7SEG.h"
+#include "swControll.h"
+#include "defines.h"
+#include "CLCD.h"
+
+typedef enum _stopWatchActionState {
+	RUN = 0,
+	PAUSE,
+	STOP
+} stopWatchActionState;
+
+typedef struct _stopWatchTime {
+	int hour;
+	int minute;
+	int second;
+	int millisecond;
+} stopWatchTime;
+
+typedef struct _lapTime {
+	stopWatchTime lapTimeSaveSpace[9];
+	uint8_t lapTimeCount;
+	uint8_t lapTimeflag;
+	uint8_t lapTimeActionCount;
+	uint8_t lapTimeMeasureBuffer[16];
+} lapTime;
+
+typedef struct _stopWatch {
+	stopWatchActionState state;
+	stopWatchTime time;
+	lapTime lap;
+} stopWatch;
+
+
+void segUpCount();
+void segReset();
+void timerReset();
+void timerPaused();
+void timerResum();
+void saveTime();
+void lapTimeSave();
+void lapTimeClear();
+void lapTimeDisplay();
+void lapTimeMeasure();
+void sw2StopWatchControll();
+void sw3StopWatchReset();
+
+
+#endif /* INC_STOPWATCH_H_ */

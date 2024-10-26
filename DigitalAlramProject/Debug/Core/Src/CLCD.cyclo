@@ -1,0 +1,7 @@
+../Core/Src/CLCD.c:24:6:CLCD_GPIO_Init	1
+../Core/Src/CLCD.c:57:6:CLCD_Write_Instruction	9
+../Core/Src/CLCD.c:88:6:CLCD_Write_Display	9
+../Core/Src/CLCD.c:120:6:CLCD_Gotoxy	3
+../Core/Src/CLCD.c:132:6:CLCD_Puts	2
+../Core/Src/CLCD.c:144:6:CLCD_Init	1
+../Core/Src/CLCD.c:158:6:CLCD_Clear	1

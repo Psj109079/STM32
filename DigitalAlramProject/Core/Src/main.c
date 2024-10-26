@@ -25,6 +25,7 @@
 #include "uartLEDControll.h"
 #include "stopWatch.h"
 #include "7SEG.h"
+#include "CLCD.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,9 +51,10 @@ UART_HandleTypeDef huart3;
 /* USER CODE BEGIN PV */
 extern uartRx uartRxfd;
 extern uint8_t select_LED;
-extern uint8_t PC15_State;
-extern uint8_t PD4_State;
-extern stopWatch swState;
+extern sw2 PC15;
+extern sw3 PD4;
+extern sw4 PD10;
+extern stopWatch stopwatch;
 
 
 /* USER CODE END PV */
@@ -110,6 +112,8 @@ int main(void)
   // UART call
   HAL_UART_Receive_IT(&huart3, &uartRxfd.uart3_rx_data, sizeof(uartRxfd.uart3_rx_data));
   HAL_TIM_Base_Start_IT(&htim6);
+  CLCD_GPIO_Init();
+  CLCD_Init();
   _7SEG_GPIO_Init();
 
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, 1);
@@ -119,6 +123,7 @@ int main(void)
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, 1);
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
 
+  CLCD_Puts(0, 0, CLCD_DEFAULT);
 
   /* USER CODE END 2 */
 
@@ -128,6 +133,7 @@ int main(void)
   {
 	  sw2StopWatchControll();
 	  sw3StopWatchReset();
+	  sw4LaptimeDisplay();
 
 
     /* USER CODE END WHILE */
@@ -359,7 +365,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM6) {
-		swState.time.millisecond++;
+		stopwatch.time.millisecond++;
 		saveTime();
 
 	}
@@ -372,19 +378,22 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	}
 
 	if(GPIO_Pin == GPIO_PIN_15 && HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15)) {
-		PC15_State = !PC15_State;
+		PC15.state = !PC15.state;
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
 	}
 	if(GPIO_Pin == GPIO_PIN_4 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_4)) {
-		PD4_State = 1;
-		if(swState.state == PAUSE || swState.state == STOP) {
+		PD4.state = 1;
+		if(stopwatch.state == PAUSE || stopwatch.state == STOP) {
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
 		}
 	} else {
-		PD4_State = 0;
+		PD4.state = 0;
 	}
 	if(GPIO_Pin == GPIO_PIN_10 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_10)) {
+		PD10.state = 1;
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+	} else {
+		PD10.state = 0;
 	}
 
 }

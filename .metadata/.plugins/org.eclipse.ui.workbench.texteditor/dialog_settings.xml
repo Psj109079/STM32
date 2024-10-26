@@ -1,21 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="HAL_TIM_IRQHandler"/>
+		<item key="selection" value="cnt"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="HAL_TIM_IRQHandler"/>
+			<item value="lapTimeCnt"/>
+			<item value="cnt"/>
+			<item value="sw3"/>
+			<item value="sw2"/>
+			<item value="PD4_State"/>
+			<item value="PC15_State"/>
+			<item value="State"/>
+			<item value="PC15"/>
+			<item value="stopwatch.laptime.flag"/>
+			<item value="PD4_State;"/>
+			<item value="sw2.PC15_State"/>
+			<item value="PC15_State;"/>
+			<item value="laptimeTimeMeasure"/>
+			<item value="measureBuffer"/>
+			<item value="SaveSpace"/>
 		</list>
 		<list key="replacehistory">
+			<item value="cnt"/>
+			<item value="lapTimeCnt"/>
+			<item value="PD4"/>
+			<item value="PC15"/>
+			<item value="state"/>
+			<item value="sw3.flag"/>
+			<item value="sw3.PD4_State"/>
+			<item value="sw2.PC15_State"/>
+			<item value="clcdStopWatchMeasure"/>
+			<item value="buffer"/>
+			<item value="saveSpace"/>
+			<item value="measureBuffer"/>
+			<item value="MeasureBuffer"/>
+			<item value="flag"/>
+			<item value="SaveSpace"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="364"/>
-		<item key="DIALOG_Y_ORIGIN" value="263"/>
+		<item key="DIALOG_X_ORIGIN" value="665"/>
+		<item key="DIALOG_Y_ORIGIN" value="258"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
