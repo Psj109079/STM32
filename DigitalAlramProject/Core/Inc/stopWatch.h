@@ -12,8 +12,6 @@
 #include "main.h"
 #include "7SEG.h"
 #include "swControll.h"
-#include "defines.h"
-#include "btnStruct.h"
 #include "CLCD.h"
 
 #define CLCD_DEFAULT 			"STW 00:00:00.000"
@@ -52,13 +50,11 @@ void timerReset();
 void timerPaused();
 void timerResum();
 void saveTime();
-void lapTimeSave();
-void lapTimeDisplay();
+void laptimeSave();
+void laptimeDisplay();
 void clcdStopWatchClear();
 void clcdStopWatchMeasure();
-void sw2StopWatchControll();
-void sw3StopWatchReset();
-void sw4LaptimeDisplay();
+
 
 
 #endif /* INC_STOPWATCH_H_ */

@@ -51,10 +51,12 @@ UART_HandleTypeDef huart3;
 /* USER CODE BEGIN PV */
 extern uartRx uartRxfd;
 extern uint8_t select_LED;
-extern sw2 PC15;
-extern sw3 PD4;
-extern sw4 PD10;
-extern stopWatch stopwatch;
+sw1 pe3;
+sw2 pc15;
+sw3 pd4;
+sw4 pd10;
+releasePoint rsp = SHORT;
+stopWatch stopwatch = {STOP, {0, 0, 0, 0}};
 
 
 /* USER CODE END PV */
@@ -123,7 +125,7 @@ int main(void)
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, 1);
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
 
-  CLCD_Puts(0, 0, CLCD_DEFAULT);
+//  CLCD_Puts(0, 0, CLCD_DEFAULT);
 
   /* USER CODE END 2 */
 
@@ -131,9 +133,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  sw2StopWatchControll();
-	  sw3StopWatchReset();
-	  sw4LaptimeDisplay();
+	  sw1Controll();
+	  sw2Controll();
+	  sw3Controll();
+	  sw4Controll();
 
 
     /* USER CODE END WHILE */
@@ -367,33 +370,38 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM6) {
 		stopwatch.time.millisecond++;
 		saveTime();
-
+		if(pe3.state == TRUE && pe3.pressCnt <= LONG_PRESS) {
+			pe3.pressCnt++;
+		}
 	}
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_3 && HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3)) {
+		pe3.state = 1;
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+	} else {
+		pe3.state = 0;
 	}
 
 	if(GPIO_Pin == GPIO_PIN_15 && HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15)) {
-		PC15.state = !PC15.state;
+		pc15.state = !pc15.state;
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
 	}
 	if(GPIO_Pin == GPIO_PIN_4 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_4)) {
-		PD4.state = 1;
+		pd4.state = 1;
 		if(stopwatch.state == PAUSE || stopwatch.state == STOP) {
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
 		}
 	} else {
-		PD4.state = 0;
+		pd4.state = 0;
 	}
 	if(GPIO_Pin == GPIO_PIN_10 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_10)) {
-		PD10.state = 1;
+		pd10.state = 1;
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 	} else {
-		PD10.state = 0;
+		pd10.state = 0;
 	}
 
 }

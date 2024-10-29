@@ -6,12 +6,8 @@
  */
 
 #include "stopWatch.h"
-stopWatch stopwatch = {STOP, {0, 0, 0, 0}};
 stopWatchTime pausedTimer = {0, 0, 0, 0};
-sw2 PC15;
-sw3 PD4;
-sw4 PD10;
-
+extern stopWatch stopwatch;
 
 void segUpCount() {
 	// 스탑워치 시작 함수
@@ -74,7 +70,7 @@ void saveTime() {
 	}
 }
 
-void laptimeTimeSave() {
+void laptimeSave() {
 	// 랩타임 저장 함수
 	if(stopwatch.laptime.cnt < 9) {
 		stopwatch.laptime.saveSpace[stopwatch.laptime.cnt].hour  = stopwatch.time.hour;
@@ -97,7 +93,7 @@ void laptimeTimeSave() {
 	}
 }
 
-void laptimeTimeDisplay() {
+void laptimeDisplay() {
 	// CLCD 랩타임 출력 함수
 	if(stopwatch.laptime.cnt > 0) {
 
@@ -151,74 +147,3 @@ void clcdStopWatchMeasure() {
 	CLCD_Puts(0, 0, stopwatch.laptime.buffer);
 }
 
-void sw2StopWatchControll() {
-	// SW2 PC15, PD13
-	// 스탑워치 시작, 일시정지, 재개 함수
-	if (PC15.state == TRUE) {
-
-		switch(stopwatch.state) {
-		case STOP: timerReset();
-			break;
-		case PAUSE: timerResum();
-			break;
-		case RUN:
-			break;
-		}
-		stopwatch.state = RUN;
-		segUpCount();
-		clcdStopWatchMeasure();
-	} else if(PC15.state == FALSE && stopwatch.state == RUN) {
-		stopwatch.state = PAUSE;
-		timerPaused();
-	}
-}
-
-void sw3StopWatchReset() {
-	// SW3 PD4, PD14
-	// 스탑워치리셋, 랩타임저장, CLCD초기화 함수
-	if(PD4.state) {
-
-		switch(stopwatch.state) {
-		case STOP:
-			if (PD4.flag == FALSE) {
-				stopwatch.state = STOP;
-				segReset();
-				clcdStopWatchClear();
-				PD4.flag = 1;
-
-			}
-			break;
-		case PAUSE:
-			if (PD4.flag == FALSE) {
-				stopwatch.state = STOP;
-				segReset();
-				clcdStopWatchClear();
-				PD4.flag = 1;
-
-			}
-			break;
-		case RUN:
-			// 버튼을 누르고 있을경우 랩타임이 계속 저장되는 경우를 방지
-			if(PD4.flag == FALSE) {
-				laptimeTimeSave();
-				PD4.flag = 1;
-			}
-			break;
-		}
-	} else {
-		PD4.flag = 0;
-	}
-}
-
-void sw4LaptimeDisplay() {
-	// SW4 PD10, PC6
-	// 저장된 laptime 출력
-	if(PD10.state == TRUE) {
-		if(PD10.flag == FALSE) {
-			laptimeTimeDisplay();
-			PD10.flag = 1;
-		}
-	} else {
-		PD10.flag = 0;
-	}
-}

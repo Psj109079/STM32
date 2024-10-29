@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="cnt"/>
+		<item key="selection" value="pd10"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="PD10"/>
+			<item value="PD4"/>
+			<item value="PC15"/>
+			<item value="pe3"/>
+			<item value="pausedTimer"/>
 			<item value="lapTimeCnt"/>
 			<item value="cnt"/>
 			<item value="sw3"/>
@@ -15,16 +20,15 @@
 			<item value="PD4_State"/>
 			<item value="PC15_State"/>
 			<item value="State"/>
-			<item value="PC15"/>
 			<item value="stopwatch.laptime.flag"/>
 			<item value="PD4_State;"/>
 			<item value="sw2.PC15_State"/>
-			<item value="PC15_State;"/>
-			<item value="laptimeTimeMeasure"/>
-			<item value="measureBuffer"/>
-			<item value="SaveSpace"/>
 		</list>
 		<list key="replacehistory">
+			<item value="PD10"/>
+			<item value="pc15"/>
+			<item value="pd4"/>
+			<item value="pd10"/>
 			<item value="cnt"/>
 			<item value="lapTimeCnt"/>
 			<item value="PD4"/>
@@ -36,10 +40,6 @@
 			<item value="clcdStopWatchMeasure"/>
 			<item value="buffer"/>
 			<item value="saveSpace"/>
-			<item value="measureBuffer"/>
-			<item value="MeasureBuffer"/>
-			<item value="flag"/>
-			<item value="SaveSpace"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
