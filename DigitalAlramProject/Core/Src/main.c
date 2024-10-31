@@ -56,7 +56,7 @@ sw2 pc15;
 sw3 pd4;
 sw4 pd10;
 releasePoint rsp = SHORT;
-stopWatch stopwatch = {STOP, {0, 0, 0, 0}};
+stopWatch stopwatch = {0, STOP, {0, 0, 0, 0}};
 
 
 /* USER CODE END PV */
@@ -126,7 +126,7 @@ int main(void)
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
 
 //  CLCD_Puts(0, 0, CLCD_DEFAULT);
-
+  CLCD_Puts(0, 0, "   0 700 2500  0");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -370,8 +370,25 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM6) {
 		stopwatch.time.millisecond++;
 		saveTime();
-		if(pe3.state == TRUE && pe3.pressCnt <= LONG_PRESS) {
-			pe3.pressCnt++;
+		if(pe3.state == TRUE) {
+			if(pe3.pressCnt <= LONG_PRESS) {
+				pe3.pressCnt++;
+			}
+			switch(rsp) {
+			case SHORT:
+				break;
+			case MID:
+				if(pe3.pressCnt % 150 == 0) {
+					pe3.tempCnt++;
+				}
+				break;
+			case LONG:
+				if(stopwatch.time.millisecond % 20 == 0) {
+					pe3.tempCnt++;
+				}
+				break;
+
+			}
 		}
 	}
 }
@@ -380,26 +397,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_3 && HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3)) {
 		pe3.state = 1;
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 	} else {
 		pe3.state = 0;
 	}
 
 	if(GPIO_Pin == GPIO_PIN_15 && HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15)) {
-		pc15.state = !pc15.state;
+		pc15.state = 1;
+		stopwatch.onOffState = !stopwatch.onOffState;
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+	} else {
+		pc15.state = 0;
 	}
 	if(GPIO_Pin == GPIO_PIN_4 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_4)) {
 		pd4.state = 1;
-		if(stopwatch.state == PAUSE || stopwatch.state == STOP) {
-			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
-		}
 	} else {
 		pd4.state = 0;
 	}
 	if(GPIO_Pin == GPIO_PIN_10 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_10)) {
 		pd10.state = 1;
-		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 	} else {
 		pd10.state = 0;
 	}

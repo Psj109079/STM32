@@ -1,38 +1,158 @@
-22:29:27 **** Incremental Build of configuration Debug for project DigitalAlramProject ****
+22:42:44 **** Incremental Build of configuration Debug for project DigitalAlramProject ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stopWatch.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stopWatch.d" -MT"Core/Src/stopWatch.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stopWatch.o"
 arm-none-eabi-gcc "../Core/Src/swControll.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/swControll.d" -MT"Core/Src/swControll.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/swControll.o"
+arm-none-eabi-gcc "../Core/Src/uartLEDControll.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/uartLEDControll.d" -MT"Core/Src/uartLEDControll.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/uartLEDControll.o"
+../Core/Src/stopWatch.c: In function 'laptimeSave':
+../Core/Src/stopWatch.c:81:42: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+   81 |                 sprintf(stopwatch.laptime.buffer, "LP%d %02d:%02d:%02d.%03d", // ?ž©???ž„ ???ž¥
+      |                         ~~~~~~~~~~~~~~~~~^~~~~~~
+      |                                          |
+      |                                          uint8_t * {aka unsigned char *}
+In file included from ../Core/Inc/stopWatch.h:11,
+                 from ../Core/Src/stopWatch.c:8:
+D:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/stdio.h:250:18: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  250 | int     sprintf (char *__restrict, const char *__restrict, ...)
+      |                  ^
+../Core/Src/stopWatch.c:91:33: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   91 |                 CLCD_Puts(0, 1, "                ");
+      |                                 ^~~~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 char *
+In file included from ../Core/Inc/swControll.h:14,
+                 from ../Core/Inc/stopWatch.h:14:
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+../Core/Src/stopWatch.c:92:33: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   92 |                 CLCD_Puts(0, 1, "LAP FULL(9/9)");
+      |                                 ^~~~~~~~~~~~~~~
+      |                                 |
+      |                                 char *
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+../Core/Src/stopWatch.c: In function 'laptimeDisplay':
+../Core/Src/stopWatch.c:104:42: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+  104 |                 sprintf(stopwatch.laptime.buffer, "%d/9 %02d:%02d:%02d.%03d",
+      |                         ~~~~~~~~~~~~~~~~~^~~~~~~
+      |                                          |
+      |                                          uint8_t * {aka unsigned char *}
+D:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/stdio.h:250:18: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  250 | int     sprintf (char *__restrict, const char *__restrict, ...)
+      |                  ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/stopWatch.c:116:33: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+  116 |                 CLCD_Puts(0, 1, "                ");
+      |                                 ^~~~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 char *
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+../Core/Src/main.c:129:19: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+  129 |   CLCD_Puts(0, 0, "   0 700 2500  0");
+      |                   ^~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   char *
+../Core/Src/stopWatch.c:117:33: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+  117 |                 CLCD_Puts(0, 1, "NO LAP");
+      |                                 ^~~~~~~~
+      |                                 |
+      |                                 char *
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+In file included from ../Core/Inc/swControll.h:14,
+                 from ../Core/Src/main.c:24:
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
 ../Core/Src/swControll.c: In function 'sw1Controll':
-../Core/Src/swControll.c:29:28: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
-   29 |                 sprintf(pe3.buffer, "%4d   %d  %d", pe3.pressCnt, MID_PRESS, LONG_PRESS);
+../Core/Src/stopWatch.c: In function 'clcdStopWatchClear':
+../Core/Src/swControll.c:31:28: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+   31 |                 sprintf(pe3.buffer, "%4d %d %d%3d", pe3.pressCnt, MID_PRESS, LONG_PRESS, pe3.tempCnt);
       |                         ~~~^~~~~~~
       |                            |
       |                            uint8_t * {aka unsigned char *}
+../Core/Inc/stopWatch.h:17:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   17 | #define CLCD_DEFAULT                    "STW 00:00:00.000"
+      |                                         ^~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         char *
+../Core/Src/stopWatch.c:134:25: note: in expansion of macro 'CLCD_DEFAULT'
+  134 |         CLCD_Puts(0, 0, CLCD_DEFAULT);
+      |                         ^~~~~~~~~~~~
 In file included from ../Core/Inc/swControll.h:11,
                  from ../Core/Src/swControll.c:7:
 D:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/stdio.h:250:18: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
   250 | int     sprintf (char *__restrict, const char *__restrict, ...)
       |                  ^
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+../Core/Src/stopWatch.c: In function 'clcdStopWatchMeasure':
 ../Core/Src/swControll.c:35:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
-   35 |                         CLCD_Puts(0, 1, "SHORT RELEASE");
-      |                                         ^~~~~~~~~~~~~~~
+   35 |                         CLCD_Puts(0, 1, "SHORT HOLD           ");
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~
       |                                         |
       |                                         char *
+../Core/Src/stopWatch.c:140:42: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+  140 |                 sprintf(stopwatch.laptime.buffer, "STW %02d:%02d:%02d.%03d",
+      |                         ~~~~~~~~~~~~~~~~~^~~~~~~
+      |                                          |
+      |                                          uint8_t * {aka unsigned char *}
 In file included from ../Core/Inc/swControll.h:14:
 ../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
    57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
       |                                                  ~~~~~~~~~~~~~~~^~~
-../Core/Src/swControll.c:39:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
-   39 |                         CLCD_Puts(0, 1, "MID RELEASE");
-      |                                         ^~~~~~~~~~~~~
+D:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/stdio.h:250:18: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  250 | int     sprintf (char *__restrict, const char *__restrict, ...)
+      |                  ^
+../Core/Src/swControll.c:38:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   38 |                         CLCD_Puts(0, 1, "MID HOLD             ");
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         char *
+../Core/Src/stopWatch.c:144:42: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+  144 |                 sprintf(stopwatch.laptime.buffer, "STW %02d:%02d:%02d %03d",
+      |                         ~~~~~~~~~~~~~~~~~^~~~~~~
+      |                                          |
+      |                                          uint8_t * {aka unsigned char *}
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+D:\ST\STM32CubeIDE_1.15.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/stdio.h:250:18: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  250 | int     sprintf (char *__restrict, const char *__restrict, ...)
+      |                  ^
+../Core/Src/swControll.c:41:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   41 |                         CLCD_Puts(0, 1, "LONG HOLD            ");
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~
       |                                         |
       |                                         char *
 ../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
    57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
       |                                                  ~~~~~~~~~~~~~~~^~~
-../Core/Src/swControll.c:43:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
-   43 |                         CLCD_Puts(0, 1, "LONG RELEASE");
-      |                                         ^~~~~~~~~~~~~~
+../Core/Src/swControll.c:48:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   48 |                         CLCD_Puts(0, 1, "SHORT RELEASE        ");
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         char *
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+../Core/Src/swControll.c:52:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   52 |                         CLCD_Puts(0, 1, "MID RELEASE          ");
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~
+      |                                         |
+      |                                         char *
+../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
+   57 | void CLCD_Puts(unsigned char x, unsigned char y, unsigned char *str);
+      |                                                  ~~~~~~~~~~~~~~~^~~
+../Core/Src/swControll.c:56:41: warning: pointer targets in passing argument 3 of 'CLCD_Puts' differ in signedness [-Wpointer-sign]
+   56 |                         CLCD_Puts(0, 1, "LONG RELEASE         ");
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~
       |                                         |
       |                                         char *
 ../Core/Inc/CLCD.h:57:65: note: expected 'unsigned char *' but argument is of type 'char *'
@@ -44,11 +164,11 @@ Finished building target: DigitalAlramProject.elf
 arm-none-eabi-size  DigitalAlramProject.elf 
 arm-none-eabi-objdump -h -S DigitalAlramProject.elf  > "DigitalAlramProject.list"
    text	   data	    bss	    dec	    hex	filename
-  21516	    280	   2104	  23900	   5d5c	DigitalAlramProject.elf
+  21872	    280	   2112	  24264	   5ec8	DigitalAlramProject.elf
 Finished building: default.size.stdout
  
 Finished building: DigitalAlramProject.list
  
 
-22:29:28 Build Finished. 0 errors, 4 warnings. (took 1s.5ms)
+22:42:45 Build Finished. 0 errors, 17 warnings. (took 1s.180ms)
 

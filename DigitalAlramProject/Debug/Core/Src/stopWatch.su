@@ -7,4 +7,4 @@
 ../Core/Src/stopWatch.c:73:6:laptimeSave	32	static
 ../Core/Src/stopWatch.c:96:6:laptimeDisplay	32	static
 ../Core/Src/stopWatch.c:122:6:clcdStopWatchClear	16	static
-../Core/Src/stopWatch.c:136:6:clcdStopWatchMeasure	16	static
+../Core/Src/stopWatch.c:137:6:clcdStopWatchMeasure	16	static

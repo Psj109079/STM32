@@ -122,6 +122,7 @@ void laptimeDisplay() {
 void clcdStopWatchClear() {
 	// CLCD 스탑워치 초기화 함수
 	for(int i = 0; i < 9; i++) {
+		// 랩타임 초기화
 		stopwatch.laptime.saveSpace[i].hour = 0;
 		stopwatch.laptime.saveSpace[i].minute = 0;
 		stopwatch.laptime.saveSpace[i].second = 0;

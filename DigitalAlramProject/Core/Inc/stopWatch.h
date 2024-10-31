@@ -38,7 +38,8 @@ typedef struct _lapTime {
 } lapTime;
 
 typedef struct _stopWatch {
-	stopWatchActionState state;
+	uint8_t onOffState;			// 스탑워치 on/off 변수
+	stopWatchActionState state;	// 스탑워치 동작 상태 변수
 	stopWatchTime time;
 	lapTime laptime;
 } stopWatch;
