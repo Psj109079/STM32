@@ -13,6 +13,8 @@
 #include "7SEG.h"
 #include "CLCD.h"
 #include "stopWatch.h"
+#include "buzzer.h"
+#include "clock.h"
 
 
 #define MID_PRESS 		700
@@ -24,32 +26,28 @@ typedef enum _releasePoint {
 	LONG
 } releasePoint;
 
-typedef struct _sw1 {
+typedef enum _modeSelector{
+	CLOCK = 0,
+	STOPWATCH,
+	CLOCK_SETTING	// clock 모드에서 mid 경계일때 설정모드로 진입하고 release 시에는 진입하지 못하는 값
+} modeSelector;
+
+typedef struct _button {
 	uint8_t state;
 	uint8_t flag;
 	int pressCnt;			// 누르고 있는 시간 저장 변수
-	int tempCnt;			// 홀드시 카운트 증가 변수
 	uint8_t buffer[20];		// clcd 출력용 버퍼
-} sw1;
-typedef struct _sw2 {
-	uint8_t state;
-	uint8_t flag;
-} sw2;
+} button;
 
-typedef struct _sw3 {
-	uint8_t state;
-	uint8_t flag;
-} sw3;
 
-typedef struct _sw4 {
-	uint8_t state;
-	uint8_t flag;
-} sw4;
-
+void running();
 void sw1Controll();
 void sw2Controll();
 void sw3Controll();
 void sw4Controll();
+int getPressCount(int swNum);
+void holdEvent();
+void releasePointing(int swNum);
 void sw1RedLEDControll();
 void sw2GreedLEDControll();
 void sw3BlueLEDControll();

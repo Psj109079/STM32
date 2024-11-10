@@ -1,0 +1,47 @@
+/*
+ * buzzer.c
+ *
+ *  Created on: Nov 2, 2024
+ *      Author: ckck
+ */
+
+#include "buzzer.h"
+
+extern TIM_HandleTypeDef htim2;
+extern buzzer buz;
+buz_tone_psc buzTone = BUZ_TONE_LOW_PSC;
+int cnt;
+
+void buzOnOff() {
+	if(buz.ms < BUZ_OP_TIME) {
+		TIM2 -> PSC = buzTone;
+		HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+	} else {
+		buz.onOff = 0;
+		buz.ms = 0;
+		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+	}
+}
+void buzToneChange() {
+	cnt = getPressCount();
+	if(cnt < MID_PRESS ) {
+		buzTone = BUZ_TONE_LOW_PSC;
+	} else if(cnt == MID_PRESS) {
+		buzTone = BUZ_TONE_MID_PSC;
+		buz.onOff = 1;
+	} else if(cnt == LONG_PRESS) {
+		buzTone = BUZ_TONE_HIGH_PSC;
+		buz.onOff = 1;
+	}
+}
+
+uint8_t getbuzzerOnOff() {
+	return buz.onOff;
+}
+
+void setbuzzerOnOff(uint8_t onOff) {
+	buz.onOff = onOff;
+}
+
+
+

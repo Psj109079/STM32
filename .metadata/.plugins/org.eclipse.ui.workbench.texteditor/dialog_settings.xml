@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="onOffState"/>
+		<item key="selection" value="timePeriod"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="onOFFState"/>
+			<item value="timePeriod"/>
+			<item value="stopwatch"/>
+			<item value="clock"/>
+			<item value="leafYear"/>
+			<item value="WATCH"/>
+			<item value="watch"/>
 			<item value="rsp"/>
+			<item value="buz.flag"/>
+			<item value="saveTime"/>
+			<item value="HAL_TIM_IRQHandler"/>
+			<item value="tim2"/>
+			<item value="TIM2"/>
+			<item value="onOFFState"/>
 			<item value="MID_PRESS"/>
 			<item value="pc15"/>
-			<item value="PD10"/>
-			<item value="PD4"/>
-			<item value="PC15"/>
-			<item value="pe3"/>
-			<item value="pausedTimer"/>
-			<item value="lapTimeCnt"/>
-			<item value="cnt"/>
-			<item value="sw3"/>
-			<item value="sw2"/>
-			<item value="PD4_State"/>
-			<item value="PC15_State"/>
 		</list>
 		<list key="replacehistory">
+			<item value="leapYear"/>
+			<item value="CLOCK"/>
+			<item value=""/>
+			<item value="buz.onOff"/>
+			<item value="onOff"/>
 			<item value="onOffState"/>
 			<item value="PC15"/>
 			<item value="PD10"/>
@@ -35,11 +40,6 @@
 			<item value="lapTimeCnt"/>
 			<item value="PD4"/>
 			<item value="state"/>
-			<item value="sw3.flag"/>
-			<item value="sw3.PD4_State"/>
-			<item value="sw2.PC15_State"/>
-			<item value="clcdStopWatchMeasure"/>
-			<item value="buffer"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
@@ -48,5 +48,9 @@
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="281"/>
+		<item key="DIALOG_Y_ORIGIN" value="391"/>
 	</section>
 </section>

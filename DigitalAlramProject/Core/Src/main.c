@@ -17,6 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -24,6 +25,8 @@
 #include "swControll.h"
 #include "uartLEDControll.h"
 #include "stopWatch.h"
+#include "buzzer.h"
+#include "clock.h"
 #include "7SEG.h"
 #include "CLCD.h"
 /* USER CODE END Includes */
@@ -44,6 +47,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart3;
@@ -51,11 +55,12 @@ UART_HandleTypeDef huart3;
 /* USER CODE BEGIN PV */
 extern uartRx uartRxfd;
 extern uint8_t select_LED;
-sw1 pe3;
-sw2 pc15;
-sw3 pd4;
-sw4 pd10;
-releasePoint rsp = SHORT;
+extern modeSelector mode;
+button sw1;
+button sw2;
+button sw3;
+button sw4;
+clockSt clock = {Y, M, D, H, MIN, SEC, 0, 0, 0, 0, 0, 0};
 stopWatch stopwatch = {0, STOP, {0, 0, 0, 0}};
 
 
@@ -66,6 +71,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM2_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -100,13 +106,18 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  clock.leapYear = leapYearCalculator(Y);// 시스템 시작 시 초기 설정된 년이 윤년인지 확인
+  clock.thiryMonth = isThirtyDays(M); 	// 시스템 시작 시 초기 설정된 달을 넣어서 말일이 30일인지 아닌지 확인
+  CLCD_GPIO_Init();
+  CLCD_Init();
+  _7SEG_GPIO_Init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART3_UART_Init();
   MX_TIM6_Init();
+  MX_TIM2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -114,9 +125,8 @@ int main(void)
   // UART call
   HAL_UART_Receive_IT(&huart3, &uartRxfd.uart3_rx_data, sizeof(uartRxfd.uart3_rx_data));
   HAL_TIM_Base_Start_IT(&htim6);
-  CLCD_GPIO_Init();
-  CLCD_Init();
-  _7SEG_GPIO_Init();
+
+  TIM2 -> CCR1 = TIM2 -> ARR / 2;
 
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, 1);
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
@@ -126,13 +136,15 @@ int main(void)
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 1);
 
 //  CLCD_Puts(0, 0, CLCD_DEFAULT);
-  CLCD_Puts(0, 0, "   0 700 2500  0");
+//  CLCD_Puts(0, 0, "   0 700 2500  0");
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  running();
 	  sw1Controll();
 	  sw2Controll();
 	  sw3Controll();
@@ -209,6 +221,65 @@ static void MX_NVIC_Init(void)
   /* TIM6_DAC_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 41999;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 9;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+  HAL_TIM_MspPostInit(&htim2);
+
 }
 
 /**
@@ -297,6 +368,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
@@ -369,54 +441,41 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM6) {
 		stopwatch.time.millisecond++;
-		saveTime();
-		if(pe3.state == TRUE) {
-			if(pe3.pressCnt <= LONG_PRESS) {
-				pe3.pressCnt++;
-			}
-			switch(rsp) {
-			case SHORT:
-				break;
-			case MID:
-				if(pe3.pressCnt % 150 == 0) {
-					pe3.tempCnt++;
-				}
-				break;
-			case LONG:
-				if(stopwatch.time.millisecond % 20 == 0) {
-					pe3.tempCnt++;
-				}
-				break;
-
-			}
-		}
+		stopwatchTime(); 	// 스탑워치 시간 카운트
+		holdEvent();		// presstime 측정
+		startClock(); 		// 시계모드 시간 카운트
+		switchClockMode(); 	// 시계모드 스위칭
+		buzOnOff();
 	}
+
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_3 && HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3)) {
-		pe3.state = 1;
+		sw1.state = 1;
 	} else {
-		pe3.state = 0;
+		sw1.state = 0;
 	}
 
 	if(GPIO_Pin == GPIO_PIN_15 && HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15)) {
-		pc15.state = 1;
-		stopwatch.onOffState = !stopwatch.onOffState;
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+		sw2.state = 1;
+		if(mode == STOPWATCH) {
+			stopwatch.onOffState = !stopwatch.onOffState;
+		}
+
 	} else {
-		pc15.state = 0;
+		sw2.state = 0;
 	}
 	if(GPIO_Pin == GPIO_PIN_4 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_4)) {
-		pd4.state = 1;
+		sw3.state = 1;
 	} else {
-		pd4.state = 0;
+		sw3.state = 0;
 	}
 	if(GPIO_Pin == GPIO_PIN_10 && HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_10)) {
-		pd10.state = 1;
+		sw4.state = 1;
 	} else {
-		pd10.state = 0;
+		sw4.state = 0;
 	}
 
 }

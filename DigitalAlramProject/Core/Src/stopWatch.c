@@ -51,7 +51,7 @@ void timerResum() {
 	stopwatch.time.millisecond = pausedTimer.millisecond;
 }
 
-void saveTime() {
+void stopwatchTime() {
 	// 스탑워치 시간 저장함수
 	if(stopwatch.time.millisecond % 1000 == 0) {
 		stopwatch.time.millisecond = 0;

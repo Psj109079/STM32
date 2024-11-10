@@ -1,0 +1,23 @@
+/*
+ * buzzer.h
+ *
+ *  Created on: Nov 2, 2024
+ *      Author: ckck
+ */
+
+#ifndef INC_BUZZER_H_
+#define INC_BUZZER_H_
+
+#define BUZ_OP_TIME 30
+
+typedef enum _buz_tone_psc {
+	BUZ_TONE_LOW_PSC = 15000,
+	BUZ_TONE_MID_PSC = 10000,
+	BUZ_TONE_HIGH_PSC = 7500
+} buz_tone_psc;
+
+void buzLowPsc();
+void buzMidPsc();
+void buzHighPsc();
+
+#endif /* INC_BUZZER_H_ */

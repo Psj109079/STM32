@@ -1,0 +1,14 @@
+../Core/Src/clock.c:15:6:startClock	15
+../Core/Src/clock.c:74:6:clcdDisplayClock	12
+../Core/Src/clock.c:136:6:tickClock	2
+../Core/Src/clock.c:149:5:leapYearCalculator	4
+../Core/Src/clock.c:166:5:isThirtyDays	3
+../Core/Src/clock.c:178:6:switchClockMode	6
+../Core/Src/clock.c:194:6:clcdDisplayClockSetting	20
+../Core/Src/clock.c:265:6:settingTime	2
+../Core/Src/clock.c:273:6:incrementTime	27
+../Core/Src/clock.c:349:6:decrementTime	28
+../Core/Src/clock.c:428:9:getTimeFormet	1
+../Core/Src/clock.c:432:6:setTimeFormet	1
+../Core/Src/clock.c:436:9:getWaitingTime	1
+../Core/Src/clock.c:440:6:setWaitingTime	1

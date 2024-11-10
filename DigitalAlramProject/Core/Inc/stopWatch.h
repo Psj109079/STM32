@@ -50,7 +50,7 @@ void segReset();
 void timerReset();
 void timerPaused();
 void timerResum();
-void saveTime();
+void stopwatchTime();
 void laptimeSave();
 void laptimeDisplay();
 void clcdStopWatchClear();

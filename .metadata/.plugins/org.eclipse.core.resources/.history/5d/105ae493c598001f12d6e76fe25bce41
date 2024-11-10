@@ -1,0 +1,26 @@
+/*
+ * buzzer.c
+ *
+ *  Created on: Nov 2, 2024
+ *      Author: ckck
+ */
+
+#include "buzzer.h"
+
+uint8_t tempMs;
+
+buz_tone_psc buzTone = BUZ_TONE_LOW_PSC;
+
+void buzLowPsc() {
+
+}
+
+void buzMidPsc() {
+
+}
+
+void buzHighPsc() {
+
+}
+
+

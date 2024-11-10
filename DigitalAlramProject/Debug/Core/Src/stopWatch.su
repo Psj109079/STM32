@@ -3,7 +3,7 @@
 ../Core/Src/stopWatch.c:30:6:timerReset	4	static
 ../Core/Src/stopWatch.c:38:6:timerPaused	4	static
 ../Core/Src/stopWatch.c:46:6:timerResum	4	static
-../Core/Src/stopWatch.c:54:6:saveTime	4	static
+../Core/Src/stopWatch.c:54:6:stopwatchTime	4	static
 ../Core/Src/stopWatch.c:73:6:laptimeSave	32	static
 ../Core/Src/stopWatch.c:96:6:laptimeDisplay	32	static
 ../Core/Src/stopWatch.c:122:6:clcdStopWatchClear	16	static
