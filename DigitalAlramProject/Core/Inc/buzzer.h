@@ -20,8 +20,8 @@ typedef enum _buz_tone_psc {
 } buz_tone_psc;
 
 typedef struct _buzzer {
-	uint8_t enabled; // 활성화, 비활성화 변수
-	uint8_t onOff; // 동작, 정지 flag
+	uint8_t enabled;	// 활성화, 비활성화 변수
+	uint8_t onOff;		// 동작, 정지 flag
 	uint8_t ms;
 } buzzer;
 
@@ -29,6 +29,8 @@ typedef struct _buzzer {
 void buzOnOff();
 void playMidTone();
 void playHighTone();
+void playAlram();
+void buzReset();
 uint8_t getBuzzEnabled();
 void setBuzzEnabled(uint8_t enabled);
 uint8_t getbuzzerOnOff();

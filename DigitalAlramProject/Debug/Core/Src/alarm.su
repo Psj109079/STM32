@@ -1,0 +1,9 @@
+../Core/Src/alarm.c:14:6:clcdDisplayAlarm	24	static
+../Core/Src/alarm.c:24:6:clcdDisplayAlarmTrigger	8	static
+../Core/Src/alarm.c:34:6:selectAlarm	4	static
+../Core/Src/alarm.c:42:6:alarmTrigger	16	static
+../Core/Src/alarm.c:62:6:returnToPreviousMode	4	static
+../Core/Src/alarm.c:66:9:getSelect	4	static
+../Core/Src/alarm.c:70:6:setSelect	16	static
+../Core/Src/alarm.c:73:9:getAlarmEnabled	16	static
+../Core/Src/alarm.c:76:6:setAlarmEnabled	16	static

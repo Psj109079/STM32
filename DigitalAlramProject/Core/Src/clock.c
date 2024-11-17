@@ -18,9 +18,6 @@ void startClock() {
 	if(clock.millisecond == 1000) {
 		clock.millisecond = 0;
 		clock.second++;
-		if(mode == CLOCK_SETTING) {
-			clock.waitingTime++;
-		}
 	}
 	if(clock.second == 60) {
 		clock.second = 0;
@@ -88,13 +85,13 @@ void clcdDisplayClock() {
 	}
 
 	if(getTimeFormet() == TRUE) {  // 24시간 포멧일경우
-		if(clock.blink == TRUE) {
+		if(getBlink() == TRUE) {
 			sprintf(formet, "   %02d:%02d", clock.hour, clock.minute);
 		} else { 	// 콜론X
 			sprintf(formet, "   %02d %02d", clock.hour, clock.minute);
 		}
 	} else {					// AM/PM (12시간 포멧) 일경우
-		if(clock.blink == TRUE) {
+		if(getBlink() == TRUE) {
 			if(clock.hour < 12) {	// AM
 				if(clock.hour == 0) {
 					// 24시 일때
@@ -135,14 +132,9 @@ void clcdDisplayClock() {
 
 void tickClock() {
 	// 0.5초 마다 점멸
-	if(clock.millisecond < 500) {
-		clock.blink = 1;
-	} else {
-		clock.blink = 0;
-	}
 	// 7세그먼트에 초 단위 출력
 	_7SEG_SetNumber(DGT1, clock.second / 10, 0);
-	_7SEG_SetNumber(DGT2, clock.second % 10, clock.blink);
+	_7SEG_SetNumber(DGT2, clock.second % 10, getBlink());
 
 }
 
@@ -182,27 +174,24 @@ void switchClockMode() { // 시계모드에서 시계설정 모드전환 함수
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
 		playMidTone();
 
-	} else if((mode == CLOCK_SETTING && getPressCount(1) == 700) || clock.waitingTime > 30) {
+	} else if((mode == CLOCK_SETTING && getPressCount(1) == 700) || (mode == CLOCK_SETTING && getWaitingTime() > 30000)) {
 		// 시계설정모드 이면서 누른 시간이 700 인 경우 또는 시계설정모드에서 아무런 조작없이 30초가 지났을 경우
 		mode = CLOCK;
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
 		playMidTone();
-		clock.waitingTime = 0;
+		setWaitingTime(0);
 	}
 }
 
+
+
 void clcdDisplayClockSetting() { // 시계설정모드 clcd출력
 	// 0.5초 마다 점멸
-	if(clock.millisecond < 500) {
-		clock.blink = 1;
-	} else {
-		clock.blink = 0;
-	}
 	switch(clockSet) {
 	case SECOND:
 		sprintf(clock.buffer, "CLOCK %4d.%2d.%2d", clock.year, clock.month, clock.date);
 		CLCD_Puts(0, 0, clock.buffer);
-		if(clock.waitingTime == 0 || clock.blink == TRUE) {
+		if(getWaitingTime() < 200|| getBlink() == TRUE) {
 			sprintf(clock.buffer, "SET     %02d:%02d:%02d", clock.hour, clock.minute, clock.second);
 		} else {
 			sprintf(clock.buffer, "SET     %02d:%02d:  ", clock.hour, clock.minute);
@@ -212,7 +201,7 @@ void clcdDisplayClockSetting() { // 시계설정모드 clcd출력
 	case MINUTE:
 		sprintf(clock.buffer, "CLOCK %4d.%2d.%2d", clock.year, clock.month, clock.date);
 		CLCD_Puts(0, 0, clock.buffer);
-		if(clock.waitingTime == 0 || clock.blink == TRUE) {
+		if(getWaitingTime() < 200 || getBlink() == TRUE) {
 			sprintf(clock.buffer, "SET     %02d:%02d:%02d", clock.hour, clock.minute, clock.second);
 		} else {
 			sprintf(clock.buffer, "SET     %02d:  :%02d", clock.hour, clock.second);
@@ -222,7 +211,7 @@ void clcdDisplayClockSetting() { // 시계설정모드 clcd출력
 	case HOUR:
 		sprintf(clock.buffer, "CLOCK %4d.%2d.%2d", clock.year, clock.month, clock.date);
 		CLCD_Puts(0, 0, clock.buffer);
-		if(clock.waitingTime == 0 || clock.blink == TRUE) {
+		if(getWaitingTime() < 200 || getBlink() == TRUE) {
 			sprintf(clock.buffer, "SET     %02d:%02d:%02d", clock.hour, clock.minute, clock.second);
 		} else {
 			sprintf(clock.buffer, "SET       :%02d:%02d", clock.minute, clock.second);
@@ -230,7 +219,7 @@ void clcdDisplayClockSetting() { // 시계설정모드 clcd출력
 		CLCD_Puts(0, 1, clock.buffer);
 		break;
 	case DATE:
-		if(clock.waitingTime == 0 || clock.blink == TRUE) {
+		if(getWaitingTime() < 200 || getBlink() == TRUE) {
 			sprintf(clock.buffer, "CLOCK %4d.%2d.%2d", clock.year, clock.month, clock.date);
 		} else {
 			sprintf(clock.buffer, "CLOCK %4d.%2d.  ", clock.year, clock.month);
@@ -240,7 +229,7 @@ void clcdDisplayClockSetting() { // 시계설정모드 clcd출력
 		CLCD_Puts(0, 1, clock.buffer);
 		break;
 	case MONTH:
-		if(clock.waitingTime == 0 || clock.blink == TRUE) {
+		if(getWaitingTime() < 200 || getBlink() == TRUE) {
 			sprintf(clock.buffer, "CLOCK %4d.%2d.%2d", clock.year, clock.month, clock.date);
 		} else {
 			sprintf(clock.buffer, "CLOCK %4d.  .%2d", clock.year, clock.date);
@@ -250,7 +239,7 @@ void clcdDisplayClockSetting() { // 시계설정모드 clcd출력
 		CLCD_Puts(0, 1, clock.buffer);
 		break;
 	case YEAR:
-		if(clock.waitingTime == 0 || clock.blink == TRUE) {
+		if(getWaitingTime() < 200 || getBlink() == TRUE) {
 			sprintf(clock.buffer, "CLOCK %4d.%2d.%2d", clock.year, clock.month, clock.date);
 		} else {
 			sprintf(clock.buffer, "CLOCK     .%2d.%2d", clock.month, clock.date);
@@ -431,12 +420,4 @@ uint8_t getTimeFormet() {
 
 void setTimeFormet(int onOff) {
 	clock.timeFormet = onOff;
-}
-
-uint8_t getWaitingTime() {
-	return clock.waitingTime;
-}
-
-void setWaitingTime(uint8_t t) {
-	clock.waitingTime = t;
 }

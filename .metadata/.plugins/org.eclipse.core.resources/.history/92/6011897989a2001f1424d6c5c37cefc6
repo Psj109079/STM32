@@ -1,0 +1,32 @@
+/*
+ * alarm.h
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: ckck
+ */
+
+#ifndef INC_ALARM_H_
+#define INC_ALARM_H_
+
+#include "main.h"
+#include "clock.h"
+#include "buzzer.h"
+
+typedef struct _alarmSet {
+	uint8_t hour;
+	uint8_t minute;
+	uint8_t enabled;
+} alarmSet;
+
+typedef struct _alarmSt {
+	alarmSet set[5];
+	uint8_t triggerd;
+	uint8_t select;
+} alarmSt;
+
+void selectAlarm();
+void alarmTrigger();
+uint8_t getAlarmEnabled(int num);
+void getAlarmEnabled(uint8_t enabled, int num);
+
+#endif /* INC_ALARM_H_ */

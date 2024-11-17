@@ -27,6 +27,7 @@
 #include "stopWatch.h"
 #include "buzzer.h"
 #include "clock.h"
+#include "alarm.h"
 #include "7SEG.h"
 #include "CLCD.h"
 /* USER CODE END Includes */
@@ -56,11 +57,12 @@ UART_HandleTypeDef huart3;
 extern uartRx uartRxfd;
 extern uint8_t select_LED;
 extern modeSelector mode;
+system sys = {0, 0, 0};
 button sw1;
 button sw2;
 button sw3;
 button sw4;
-clockSt clock = {Y, M, D, H, MIN, SEC, 0, 0, 0, 0, 0, 0};
+clockSt clock = {Y, M, D, H, MIN, SEC, 0, 0, 0, 0, 0};
 stopWatch stopwatch = {0, STOP, {0, 0, 0, 0}};
 
 
@@ -137,7 +139,6 @@ int main(void)
 
 //  CLCD_Puts(0, 0, CLCD_DEFAULT);
 //  CLCD_Puts(0, 0, "   0 700 2500  0");
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -440,12 +441,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Instance == TIM6) {
+		systemMillisecondCount();
+		blinking();
 		stopwatch.time.millisecond++;
 		stopwatchTime(); 	// 스탑워치 시간 카운트
 		holdEvent();		// presstime 측정
 		startClock(); 		// 시계모드 시간 카운트
 		switchClockMode(); 	// 시계모드 스위칭
 		buzOnOff();
+		waitingTimeCnt();
+		alarmTrigger();
 	}
 
 }

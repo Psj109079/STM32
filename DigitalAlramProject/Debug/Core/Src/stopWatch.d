@@ -28,7 +28,8 @@ Core/Src/stopWatch.o: ../Core/Src/stopWatch.c ../Core/Inc/stopWatch.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/7SEG.h ../Core/Inc/swControll.h ../Core/Inc/CLCD.h \
- ../Core/Inc/stopWatch.h ../Core/Inc/buzzer.h ../Core/Inc/clock.h
+ ../Core/Inc/clock.h ../Core/Inc/buzzer.h ../Core/Inc/alarm.h \
+ ../Core/Inc/stopWatch.h
 ../Core/Inc/stopWatch.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -62,6 +63,7 @@ Core/Src/stopWatch.o: ../Core/Src/stopWatch.c ../Core/Inc/stopWatch.h \
 ../Core/Inc/7SEG.h:
 ../Core/Inc/swControll.h:
 ../Core/Inc/CLCD.h:
-../Core/Inc/stopWatch.h:
-../Core/Inc/buzzer.h:
 ../Core/Inc/clock.h:
+../Core/Inc/buzzer.h:
+../Core/Inc/alarm.h:
+../Core/Inc/stopWatch.h:

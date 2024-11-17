@@ -1,7 +1,11 @@
-pe3
 rsp
 buz
 buzTone
-cnt
 clock
 mode
+sw1
+sw2
+sw3
+sw4
+alarm
+sys

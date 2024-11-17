@@ -12,9 +12,10 @@
 #include "main.h"
 #include "7SEG.h"
 #include "CLCD.h"
+#include "clock.h"
+#include "alarm.h"
 #include "stopWatch.h"
 #include "buzzer.h"
-#include "clock.h"
 
 
 #define MID_PRESS 		700
@@ -23,13 +24,15 @@
 typedef enum _releasePoint {
 	SHORT = 0,
 	MID,
-	LONG
+	LONG,
 } releasePoint;
 
 typedef enum _modeSelector{
 	CLOCK = 0,
+	ALARM,
 	STOPWATCH,
-	CLOCK_SETTING	// clock 모드에서 mid 경계일때 설정모드로 진입하고 release 시에는 진입하지 못하는 값
+	CLOCK_SETTING,	// clock 모드에서 mid 경계일때 설정모드로 진입하고 release 시에는 진입하지 못하는 값
+	ALARM_TRIGGER
 } modeSelector;
 
 typedef struct _button {
@@ -39,6 +42,11 @@ typedef struct _button {
 	uint8_t buffer[20];		// clcd 출력용 버퍼
 } button;
 
+typedef struct _system {
+	int millisecond;
+	uint8_t blink;		 // 0.5초마다 깜빡임 표시변수
+	int waitingTime;	// 대기시간
+} system;
 
 void running();
 void sw1Controll();
@@ -48,6 +56,17 @@ void sw4Controll();
 int getPressCount(int swNum);
 void holdEvent();
 void releasePointing(int swNum);
+int getSystemMillisecond();
+uint8_t getBlink();
+int getWaitingTime();
+void setWaitingTime(int t);
+void systemMillisecondCount();
+void blinking();
+void waitingTimeCnt();
+void sw1DefaultHandler();
+void sw2DefaultHandler();
+void sw3DefaultHandler();
+void sw4DefaultHandler();
 void sw1RedLEDControll();
 void sw2GreedLEDControll();
 void sw3BlueLEDControll();

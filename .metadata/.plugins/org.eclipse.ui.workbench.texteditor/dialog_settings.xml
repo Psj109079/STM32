@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="timePeriod"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="waitingTime"/>
+			<item value="clock.waitingTime"/>
+			<item value="mode"/>
+			<item value="blink"/>
+			<item value="clock.blink"/>
+			<item value="ALARM_TRIGGER) {"/>
 			<item value="timePeriod"/>
 			<item value="stopwatch"/>
 			<item value="clock"/>
@@ -17,14 +23,11 @@
 			<item value="rsp"/>
 			<item value="buz.flag"/>
 			<item value="saveTime"/>
-			<item value="HAL_TIM_IRQHandler"/>
-			<item value="tim2"/>
-			<item value="TIM2"/>
-			<item value="onOFFState"/>
-			<item value="MID_PRESS"/>
-			<item value="pc15"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getWaitingTime()"/>
+			<item value="get"/>
+			<item value="getBlink()"/>
 			<item value="leapYear"/>
 			<item value="CLOCK"/>
 			<item value=""/>
@@ -37,14 +40,11 @@
 			<item value="pd4"/>
 			<item value="pd10"/>
 			<item value="cnt"/>
-			<item value="lapTimeCnt"/>
-			<item value="PD4"/>
-			<item value="state"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="665"/>
-		<item key="DIALOG_Y_ORIGIN" value="258"/>
+		<item key="DIALOG_X_ORIGIN" value="767"/>
+		<item key="DIALOG_Y_ORIGIN" value="268"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>

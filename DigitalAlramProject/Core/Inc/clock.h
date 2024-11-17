@@ -40,8 +40,6 @@ typedef struct _clockSt {
 		int millisecond;
 		uint8_t leapYear;		// 윤년 판별변수 1이면 윤년 0이면 평년
 		uint8_t thiryMonth;		// 말일이 30일인지 판별하는 변수 1이면 30일
-		uint8_t blink;			// 0.5초마다 깜빡임 표시변수
-		uint8_t waitingTime;	// 시계설정모드에서의 대기시간
 		uint8_t timeFormet; 	// 12h/24h 설정변수 1이면 24, 0이면 12
 		uint8_t buffer[20];		// clcd 출력용 버퍼
 } clockSt;
@@ -58,6 +56,4 @@ void incrementTime();
 void decrementTime();
 uint8_t getTimeFormet();
 void setTimeFormet(int onOff);
-uint8_t getWaitingTime();
-void setWaitingTime(uint8_t t);
 #endif /* INC_CLOCK_H_ */

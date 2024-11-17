@@ -1,5 +1,6 @@
 "./Core/Src/7SEG.o"
 "./Core/Src/CLCD.o"
+"./Core/Src/alarm.o"
 "./Core/Src/buzzer.o"
 "./Core/Src/clock.o"
 "./Core/Src/main.o"
