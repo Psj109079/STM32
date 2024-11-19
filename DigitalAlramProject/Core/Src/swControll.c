@@ -1,5 +1,5 @@
 /*
- * btnControll.c
+ * swControll.c
  *
  *  Created on: Oct 13, 2024
  *      Author: ckck
@@ -326,7 +326,6 @@ void sw4Controll() {
 	// SW4 PD10
 	switch (mode) {
 	case CLOCK:		// 시계모드 일때 PD10 기능
-
 		if (sw4.state == TRUE) {
 			if (sw4.flag == FALSE) {
 				sw4.flag = 1;
@@ -352,6 +351,10 @@ void sw4Controll() {
 			releasePointing(4);
 		} else {
 			if (sw4.flag == TRUE) {
+				if(rsp == SHORT) {
+					setAlarmRepeat(!getAlarmRepeat(getSelect()), getSelect());
+					// 해당번호의 알람반복 활성화 / 비활성화
+				}
 				sw4.flag = 0;
 				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 			}

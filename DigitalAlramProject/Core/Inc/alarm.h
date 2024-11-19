@@ -18,6 +18,7 @@ typedef struct _alarmSet {
 	uint8_t hour;
 	uint8_t minute;
 	uint8_t enabled;
+	uint8_t repeat;
 } alarmSet;
 
 typedef struct _alarmSt {
@@ -35,5 +36,7 @@ uint8_t getSelect();
 void setSelect(uint8_t s);
 uint8_t getAlarmEnabled(int num);
 void setAlarmEnabled(uint8_t enable, int num);
+uint8_t getAlarmRepeat(int num);
+void setAlarmRepeat(uint8_t repeat, int num);
 
 #endif /* INC_ALARM_H_ */
