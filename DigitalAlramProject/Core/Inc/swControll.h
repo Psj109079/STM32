@@ -32,6 +32,7 @@ typedef enum _modeSelector{
 	ALARM,
 	STOPWATCH,
 	CLOCK_SETTING,	// clock 모드에서 mid 경계일때 설정모드로 진입하고 release 시에는 진입하지 못하는 값
+	ALARM_SETTING,
 	ALARM_TRIGGER
 } modeSelector;
 

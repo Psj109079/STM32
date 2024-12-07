@@ -3,10 +3,10 @@ buz
 buzTone
 clock
 mode
-sw1
 sw2
 sw3
 sw4
 alarm
 sys
-abcdef
+alarmSettingType
+stopwatch

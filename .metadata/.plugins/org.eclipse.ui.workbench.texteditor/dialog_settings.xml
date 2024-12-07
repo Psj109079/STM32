@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="decimalPoint"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="decimalPoint"/>
+			<item value="alarmSet"/>
 			<item value="waitingTime"/>
 			<item value="clock.waitingTime"/>
 			<item value="mode"/>
@@ -21,10 +23,9 @@
 			<item value="WATCH"/>
 			<item value="watch"/>
 			<item value="rsp"/>
-			<item value="buz.flag"/>
-			<item value="saveTime"/>
 		</list>
 		<list key="replacehistory">
+			<item value="alarmSettingType"/>
 			<item value="getWaitingTime()"/>
 			<item value="get"/>
 			<item value="getBlink()"/>
@@ -39,11 +40,10 @@
 			<item value="pc15"/>
 			<item value="pd4"/>
 			<item value="pd10"/>
-			<item value="cnt"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="767"/>
+		<item key="DIALOG_X_ORIGIN" value="719"/>
 		<item key="DIALOG_Y_ORIGIN" value="268"/>
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_HEIGHT" value="391"/>

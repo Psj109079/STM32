@@ -31,7 +31,6 @@ typedef struct _stopWatchTime {
 
 typedef struct _lapTime {
 	stopWatchTime saveSpace[9]; // Laptime 저장변수
-	uint8_t decimalPoint;		// 소수점 표시
 	uint8_t cnt;				// Laptime 저장시 카운트 변수
 	uint8_t displayCnt;			// CLCD 출력시 카운트 변수
 	uint8_t buffer[20];			// CLCD 출력 전 문자열 담기위한 변수

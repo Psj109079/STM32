@@ -35,10 +35,15 @@ void running() {
 		break;
 
 	case STOPWATCH:
-		//		CLCD_Clear();
+		clcdStopWatchMeasure();
+		segUpCount();
 		break;
 	case CLOCK_SETTING:
 		clcdDisplayClockSetting();
+		tickClock();
+		break;
+	case ALARM_SETTING:
+		clcdDisplayAlarmSetting();
 		tickClock();
 		break;
 	case ALARM_TRIGGER:
@@ -65,11 +70,14 @@ void sw1Controll() {
 		} else {
 			if (sw1.flag == TRUE) {
 				if(rsp == SHORT) {
-					if (mode == STOPWATCH) { // 모드변경
-						mode = CLOCK;
-					} else {
-						mode++;
+					if(mode <= STOPWATCH) {
+						if (mode == STOPWATCH) { // 모드변경
+							mode = CLOCK;
+						} else {
+							mode++;
+						}
 					}
+					CLCD_Clear();
 					HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 				}
 				sw1.flag = 0;
@@ -142,12 +150,15 @@ void sw2Controll() {
 		if(sw2.state == TRUE) {
 			if (sw2.flag == FALSE) {
 				sw2.flag = 1;
-				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+				sw2DefaultHandler();
+				setWaitingTime(0);
+				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 			}
 
 		} else {
 			if (sw2.flag == TRUE) {
 				sw2.flag = 0;
+				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 			}
 		}
 		if(stopwatch.onOffState == TRUE) {
@@ -162,10 +173,8 @@ void sw2Controll() {
 			case RUN:
 				break;
 			}
-			// 스탑워치 동작상태 RUN 으로 변경 후 실행
+			// 스탑워치 동작상태 RUN 으로 변경
 			stopwatch.state = RUN;
-			segUpCount();
-			clcdStopWatchMeasure();
 
 		} else if(stopwatch.onOffState == FALSE && stopwatch.state == RUN) {
 			// 스탑워치 동작상태 PAUSE 로 변경 후 흘렀던 시간 저장
@@ -181,6 +190,23 @@ void sw2Controll() {
 				sw2DefaultHandler();
 				setWaitingTime(0);
 				settingTime();
+				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+			}
+			releasePointing(2);
+		} else {
+			if(sw2.flag == TRUE) {
+				sw2.flag = 0;
+				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+			}
+		}
+		break;
+	case ALARM_SETTING:
+		if(sw2.state == TRUE) {
+			if(sw2.flag == FALSE) {
+				sw2.flag = 1;
+				sw2DefaultHandler();
+				setWaitingTime(0);
+				settingAlarm();
 				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 			}
 			releasePointing(2);
@@ -253,6 +279,7 @@ void sw3Controll() {
 	case STOPWATCH:	// 스탑워치 모드일 때 PD4 기능
 		// 스탑워치리셋, 랩타임저장, CLCD초기화 함수
 		if (sw3.state == TRUE) {
+			setWaitingTime(0);
 			switch (stopwatch.state) {
 			case STOP:
 				if (sw3.flag == FALSE) {
@@ -260,7 +287,8 @@ void sw3Controll() {
 					stopwatch.state = STOP;
 					segReset(); // 7세그먼트 초기화, clcd와 랩타임 저장 초기화
 					clcdStopWatchClear();
-					HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+					sw4DefaultHandler();
+					HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 					sw3.flag = 1;
 
 				}
@@ -269,9 +297,9 @@ void sw3Controll() {
 				if (sw3.flag == FALSE) {
 					// 스탑워치 리셋, 랩타임 초기화
 					stopwatch.state = STOP;
-					segReset(); // 7세그먼트 초기화, clcd와 랩타임 저장 초기화
-					clcdStopWatchClear();
-					HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+					clcdStopWatchClear();// clcd와 랩타임 저장 초기화
+					sw4DefaultHandler();
+					HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 					sw3.flag = 1;
 
 				}
@@ -280,12 +308,17 @@ void sw3Controll() {
 				// 버튼을 누르고 있을경우 랩타임이 계속 저장되는 경우를 방지
 				if (sw3.flag == FALSE) {
 					laptimeSave(); // 랩타임 저장
+					sw4DefaultHandler();
+					HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 					sw3.flag = 1;
 				}
 				break;
 			}
 		} else {
-			sw3.flag = 0;
+			if(sw3.flag == TRUE) {
+				sw3.flag = 0;
+				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+			}
 		}
 		break;
 	case CLOCK_SETTING: // 시계설정모드 일때 PD4 기능
@@ -294,6 +327,24 @@ void sw3Controll() {
 				sw3.flag = 1;
 				sw3DefaultHandler();
 				incrementTime();
+				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+			}
+			setWaitingTime(0);
+			releasePointing(3);
+		} else {
+			if (sw3.flag == TRUE) {
+				sw3.flag = 0;
+				rsp = SHORT;
+				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+			}
+		}
+		break;
+	case ALARM_SETTING:
+		if (sw3.state == TRUE) {
+			if (sw3.flag == FALSE) {
+				sw3.flag = 1;
+				sw3DefaultHandler();
+				incrementAlarmSetting();
 				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 			}
 			setWaitingTime(0);
@@ -365,11 +416,16 @@ void sw4Controll() {
 		if (sw4.state == TRUE) {
 			if (sw4.flag == FALSE) {
 				laptimeDisplay(); // 랩타임 순서대로 출력
-				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+				setWaitingTime(0);
+				sw4DefaultHandler();
+				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 				sw4.flag = 1;
 			}
 		} else {
-			sw4.flag = 0;
+			if (sw4.flag == TRUE) {
+				sw4.flag = 0;
+				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+			}
 		}
 		break;
 	case CLOCK_SETTING:  // 시계설정모드 일때 PD10 기능
@@ -384,6 +440,24 @@ void sw4Controll() {
 			releasePointing(4);
 		} else {
 			if (sw4.flag == TRUE) {
+				sw4.flag = 0;
+				rsp = SHORT;
+				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+			}
+		}
+		break;
+	case ALARM_SETTING:
+		if(sw4.state == TRUE) {
+			if(sw4.flag == FALSE) {
+				sw4.flag = 1;
+				sw4DefaultHandler();
+				decrementAlarmSetting();
+				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+			}
+			setWaitingTime(0);
+			releasePointing(4);
+		} else {
+			if(sw4.flag == TRUE) {
 				sw4.flag = 0;
 				rsp = SHORT;
 				HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
@@ -466,9 +540,9 @@ void holdEvent() {
 		if(sw3.pressCnt <= LONG_PRESS) {
 			sw3.pressCnt++;
 		}
-		if(sw3.pressCnt == MID_PRESS && mode == CLOCK_SETTING) {
+		if(sw3.pressCnt == MID_PRESS && (mode == CLOCK_SETTING || mode == ALARM_SETTING)) {
 			playMidTone();
-		} else if(sw3.pressCnt == LONG_PRESS && mode == CLOCK_SETTING) {
+		} else if(sw3.pressCnt == LONG_PRESS && (mode == CLOCK_SETTING || mode == ALARM_SETTING)) {
 			playHighTone();
 		}
 		switch(rsp) {
@@ -479,13 +553,18 @@ void holdEvent() {
 				if(mode == CLOCK_SETTING) {
 					incrementTime();
 				}
+				if(mode == ALARM_SETTING) {
+					incrementAlarmSetting();
+				}
 			}
 			break;
 		case LONG:
 			if(sys.millisecond % 20 == 0) {
 				if(mode == CLOCK_SETTING) {
 					incrementTime();
-
+				}
+				if(mode == ALARM_SETTING) {
+					incrementAlarmSetting();
 				}
 			}
 			break;
@@ -496,9 +575,9 @@ void holdEvent() {
 		if(sw4.pressCnt <= LONG_PRESS) {
 			sw4.pressCnt++;
 		}
-		if(sw4.pressCnt == MID_PRESS && mode == CLOCK_SETTING) {
+		if(sw4.pressCnt == MID_PRESS && (mode == CLOCK_SETTING || mode == ALARM_SETTING)) {
 			playMidTone();
-		} else if(sw4.pressCnt == LONG_PRESS && mode == CLOCK_SETTING) {
+		} else if(sw4.pressCnt == LONG_PRESS && (mode == CLOCK_SETTING || mode == ALARM_SETTING)) {
 			playHighTone();
 		}
 		switch(rsp) {
@@ -509,12 +588,18 @@ void holdEvent() {
 				if(mode == CLOCK_SETTING) {
 					decrementTime();
 				}
+				if(mode == ALARM_SETTING) {
+					decrementAlarmSetting();
+				}
 			}
 			break;
 		case LONG:
 			if(sys.millisecond % 20 == 0) {
 				if(mode == CLOCK_SETTING) {
 					decrementTime();
+				}
+				if(mode == ALARM_SETTING) {
+					decrementAlarmSetting();
 				}
 			}
 			break;
@@ -590,13 +675,21 @@ void blinking() {
 	}
 }
 void waitingTimeCnt() {
-	if(mode == CLOCK_SETTING || mode == ALARM){
+	if(mode == CLOCK_SETTING || mode == ALARM || mode == ALARM_SETTING || (mode == STOPWATCH && stopwatch.state == STOP)){
 		if(sys.waitingTime <= 30000) { // 30초 대기
 			sys.waitingTime++;
-		} else {
+		} else if((mode == CLOCK_SETTING || mode == ALARM || mode == STOPWATCH) && sys.waitingTime > 30000){
+			if(mode == CLOCK_SETTING) {
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 1);
+			}
 			setbuzzerOnOff(1);
 			sys.waitingTime = 0;
 			mode = CLOCK;
+		} else if(mode == ALARM_SETTING && sys.waitingTime > 30000) {
+			setbuzzerOnOff(1);
+			sys.waitingTime = 0;
+			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 1);
+			mode = ALARM;
 		}
 	}
 }

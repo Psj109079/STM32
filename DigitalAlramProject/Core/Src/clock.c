@@ -131,7 +131,6 @@ void clcdDisplayClock() {
 }
 
 void tickClock() {
-	// 0.5초 마다 점멸
 	// 7세그먼트에 초 단위 출력
 	_7SEG_SetNumber(DGT1, clock.second / 10, 0);
 	_7SEG_SetNumber(DGT2, clock.second % 10, getBlink());
@@ -174,8 +173,8 @@ void switchClockMode() { // 시계모드에서 시계설정 모드전환 함수
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
 		playMidTone();
 
-	} else if((mode == CLOCK_SETTING && getPressCount(1) == 700) || (mode == CLOCK_SETTING && getWaitingTime() > 30000)) {
-		// 시계설정모드 이면서 누른 시간이 700 인 경우 또는 시계설정모드에서 아무런 조작없이 30초가 지났을 경우
+	} else if((mode == CLOCK_SETTING && getPressCount(1) == 700)) {
+		// 시계설정모드 이면서 누른 시간이 700 인 경우
 		mode = CLOCK;
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
 		playMidTone();

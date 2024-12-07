@@ -443,14 +443,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM6) {
 		systemMillisecondCount();
 		blinking();
-		stopwatch.time.millisecond++;
 		stopwatchTime(); 	// 스탑워치 시간 카운트
 		holdEvent();		// presstime 측정
 		startClock(); 		// 시계모드 시간 카운트
-		switchClockMode(); 	// 시계모드 스위칭
+		switchClockMode(); 	// 시계모드 -> 시계설정모드 | 시계설정모드 -> 시계모드 전환
+		switchAlarmMode();	// 알람모드 -> 알람설정모드 | 알람설정모드 -> 알람모드 전환
 		buzOnOff();
 		waitingTimeCnt();
-		alarmTrigger();
+		alarmTrigger();		// 알람 울림
 	}
 
 }
